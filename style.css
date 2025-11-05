@@ -1,0 +1,223 @@
+/* style.css
+   Clean, minimal dashboard style using CSS variables, flexbox, and grid.
+   Responsive: left column stacks on small screens.
+*/
+
+/* ========== Root Colors & Theme ========== */
+:root{
+  --bg: #f7f8fb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #2563eb; /* blue */
+  --accent-2: #10b981; /* green */
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --glass: rgba(255,255,255,0.7);
+  --shadow: 0 6px 18px rgba(15,23,42,0.06);
+  --radius: 12px;
+}
+
+/* Dark theme variables */
+:root.dark{
+  --bg: #0b1220;
+  --card: #0f1724;
+  --text: #e6eef8;
+  --muted: #9aa7bf;
+  --accent: #60a5fa;
+  --accent-2: #34d399;
+  --glass: rgba(255,255,255,0.02);
+  --shadow: 0 6px 24px rgba(2,6,23,0.6);
+}
+
+/* ========== Basic Reset ========== */
+* { box-sizing: border-box; }
+html,body { height:100%; }
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg), #ffffff00);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
+}
+
+/* ========== Layout ========== */
+.app-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  gap:20px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+.brand h1{ margin:0; font-size:1.15rem; }
+.subtitle { margin:0; color:var(--muted); font-size:0.85rem; }
+
+.top-controls{ display:flex; gap:16px; align-items:center; }
+
+.budget-input{ display:flex; gap:8px; align-items:center; }
+.budget-input label{ font-size:0.8rem; color:var(--muted); margin-right:6px; }
+.budget-input input{ width:110px; padding:8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; color:var(--text); }
+
+.container{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:20px;
+  padding:20px;
+  max-width:1200px;
+  margin:20px auto;
+}
+
+/* Responsive: stack columns */
+@media (max-width:900px){
+  .container{ grid-template-columns: 1fr; padding:14px; }
+}
+
+/* Cards */
+.card{
+  background: var(--card);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: var(--shadow);
+  margin-bottom:16px;
+}
+
+/* Left Column */
+.left-column { display:flex; flex-direction:column; gap:12px; }
+
+/* Right Column */
+.right-column { display:flex; flex-direction:column; gap:12px; }
+
+/* Forms */
+form .form-row{ display:flex; flex-direction:column; margin-bottom:10px; }
+form label{ font-size:0.82rem; margin-bottom:6px; color:var(--muted); }
+input[type="text"], input[type="number"], input[type="date"], select, input[type="search"]{
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.08);
+  background:transparent;
+  color:var(--text);
+}
+
+/* Buttons */
+.btn{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:transparent;
+  cursor:pointer;
+  font-weight:600;
+}
+.btn.primary{ background:var(--accent); color:white; border: none; }
+.btn.outline{ background:transparent; border: 1px solid rgba(0,0,0,0.08); }
+.btn.dangerous{ background:var(--danger); color:white; border:none; }
+
+.form-actions{ display:flex; gap:8px; margin-top:8px; }
+
+/* Expenses table */
+.table-wrap{ overflow:auto; max-height:34vh; }
+.expenses-table{ width:100%; border-collapse:collapse; min-width:640px; }
+.expenses-table thead th{ text-align:left; padding:10px; font-size:0.82rem; color:var(--muted); position:sticky; top:0; background: var(--card); }
+.expenses-table tbody td{ padding:10px; border-top:1px solid rgba(0,0,0,0.04); vertical-align:middle; }
+.actions-col{ width:120px; text-align:center; }
+.row-actions{ display:flex; gap:6px; justify-content:center; }
+.small-btn { padding:6px 8px; border-radius:8px; font-size:0.85rem; }
+
+/* Summary cards */
+.summary-cards{ display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin-bottom:10px; }
+.stat-card{ background:var(--glass); padding:10px; border-radius:10px; text-align:left; }
+.stat-card small{ color:var(--muted); display:block; }
+.stat-value{ font-weight:700; font-size:1.05rem; margin-top:6px; }
+
+/* Progress */
+.progress-wrap{ margin-top:6px; }
+.progress-labels{ display:flex; justify-content:space-between; margin-bottom:6px; color:var(--muted); font-size:0.85rem; }
+.progress-bar{ background: rgba(0,0,0,0.06); height:14px; border-radius:999px; overflow:hidden; }
+.progress-fill{ width:0%; height:100%; background: linear-gradient(90deg,var(--accent),var(--accent-2)); transition: width 0.4s ease, background 0.25s ease; }
+
+/* Warning styles applied via JS by adding classes */
+.progress-fill.warning{ background: linear-gradient(90deg,var(--warning), #f97316); }
+.progress-fill.danger{ background: linear-gradient(90deg,var(--danger), #b91c1c); }
+
+/* Insight box */
+.insight-box{
+  margin-top:12px;
+  padding:10px;
+  border-radius:10px;
+  background: linear-gradient(180deg, rgba(16,185,129,0.06), rgba(37,99,235,0.02));
+  color:var(--text);
+  font-size:0.95rem;
+}
+
+/* Chart legend */
+.chart-legend{ list-style:none; padding:0; margin:8px 0 0; display:flex; flex-direction:column; gap:6px; font-size:0.9rem; }
+.chart-legend li{ display:flex; gap:8px; align-items:center; }
+
+/* tiny color block in legend */
+.legend-color{ width:14px; height:14px; border-radius:4px; display:inline-block; }
+
+/* Modal (edit) */
+.modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.5); z-index:50; }
+.modal.hidden{ display:none; }
+.modal-content{ width:380px; max-width:95%; background:var(--card); padding:14px; border-radius:12px; box-shadow:var(--shadow); }
+
+/* Theme toggle */
+.switch{ position:relative; display:inline-block; width:40px; height:22px; }
+.switch input{ opacity:0; width:0; height:0; }
+.slider{ position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; transition:.3s; border-radius:22px; }
+.slider:before{ position:absolute; content:""; height:16px; width:16px; left:3px; bottom:3px; background:white; transition:.3s; border-radius:50%; }
+input:checked + .slider{ background:var(--accent); }
+input:checked + .slider:before{ transform:translateX(18px); }
+
+/* Footer */
+.footer-card{ text-align:center; color:var(--muted); font-size:0.85rem; }
+
+/* small responsive tweaks */
+@media (max-width:640px){
+  .summary-cards{ grid-template-columns: 1fr 1fr; }
+  .expenses-table{ min-width:600px; }
+}
+
+/* Force category dropdown options to appear in black */
+select,
+select option {
+  color: #000 !important;
+  background-color: #fff; /* ensures clear background for light mode */
+}
+
+/* For dark theme: ensure dropdown stays readable */
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] select option {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+#resetFormBtn{
+    background-color: lightcoral;
+    color: white;
+}
+#saveBudgetBtn{
+    background-color: red;
+    color: white;
+}
+#budget{
+    color: black;
+    background-color: white;
+}
+#exportCsvBtn{
+    background-color: blue;
+    color: white;
+}
+#xpenseAmount{
+    background-color: white;
+    color: black;
+    border: white;
+}
