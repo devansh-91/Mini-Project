@@ -216,8 +216,11 @@ select option {
     background-color: blue;
     color: white;
 }
-#xpenseAmount{
+#expenseAmount{
     background-color: white;
     color: black;
-    border: white;
+}
+#expenseName{
+    background-color: white;
+    color: black;
 }
